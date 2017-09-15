@@ -2,6 +2,8 @@
 #include <string.h>
 #include <time.h>
 #include <stdlib.h>
+void rpsSelector(char compChoice[], char playerChoice[]);
+int comparePlays(char compChoice[], char playerChoice[]);
 int main(){
     //GATHERING USER INPUTS...
     char str1[4], playerChoice[9];
@@ -9,17 +11,27 @@ int main(){
     int pScore = 0, cScore = 0;
     printf("Welcome to Rock, Paper, Scissors \n Would you like to play? ");
     scanf("%s", str1);
-    rpsSelector(compChoice, playerChoice);
     // END GATHERING USER INPUTS
-
-    int victor = comparePlays(compChoice, playerChoice);
-    if(victor == 0){
-        printf("There was a tie\n");
+    while((strcmp(str1, "yes") == 0) && !(cScore == 3) && !(pScore == 3))    {
         rpsSelector(compChoice, playerChoice);
+        int victor = comparePlays(compChoice, playerChoice);
+        if(victor == 0){
+            printf("There was a tie! The score is now you: %d, computer %d \n", pScore, cScore);
+        }
+        if(victor == 1){
+            pScore++;
+            printf("You won this game!\n The score is now you: %d, computer %d \n", pScore, cScore);
+        }
+        if(victor == -1){
+            cScore++;
+            printf("The computer won this game!\n The score is now you: %d, computer %d \n", pScore, cScore);
+        }
     }
-    if(victor == 1){
-        printf("You won this game!\n The score is now you: %d, computer %d", pScore, cScore);
-    }
+    if(pScore == 3)
+        printf("You won Rock, Paper, Scissors. The score was you: %d, computer %d \n", pScore, cScore);
+    else if(cScore == 3)
+        printf("The computer won Rock, Paper, Scissors. The score was you: %d, computer %d \n", pScore, cScore);
+
     return 0;
 }
 
@@ -28,7 +40,6 @@ void rpsSelector(char compChoice[], char playerChoice[]){
     scanf("%s", playerChoice);
     srand((unsigned int)time(NULL)); //seed the rand num gen.
     int compNum = rand() % (2-0 + 1);
-    printf("The rand num is: %d", compNum);
 
     switch(compNum){
         case 0:
@@ -53,17 +64,17 @@ int comparePlays(char compChoice[], char playerChoice[]){
     if(strcmp(compChoice, playerChoice) == 0){ //tie
         return 0;
     }
-    else if((strcmp(compChoice,"rock") == 0) && (strcmp(playerChoice, "paper") == 0)
+    else if((strcmp(compChoice,"rock") == 0) && (strcmp(playerChoice, "paper") == 0))
         return 1;
-    else if((strcmp(compChoice,"rock") == 0) && (strcmp(playerChoice, "scissors") == 0)
+    else if((strcmp(compChoice,"rock") == 0) && (strcmp(playerChoice, "scissors") == 0))
         return -1;
-    else if((strcmp(compChoice,"paper") == 0) && (strcmp(playerChoice, "rock") == 0)
+    else if((strcmp(compChoice,"paper") == 0) && (strcmp(playerChoice, "rock") == 0))
         return -1;
-    else if((strcmp(compChoice,"paper") == 0) && (strcmp(playerChoice, "scissors") == 0)
+    else if((strcmp(compChoice,"paper") == 0) && (strcmp(playerChoice, "scissors") == 0))
         return 1;
-    else if((strcmp(compChoice,"scissors") == 0) && (strcmp(playerChoice, "paper") == 0)
+    else if((strcmp(compChoice,"scissors") == 0) && (strcmp(playerChoice, "paper") == 0))
         return -1;
-    else if((strcmp(compChoice,"scissors") == 0) && (strcmp(playerChoice, "rock") == 0)
+    else if((strcmp(compChoice,"scissors") == 0) && (strcmp(playerChoice, "rock") == 0))
         return 1;
-
+return 10;
 }
